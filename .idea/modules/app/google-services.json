@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "482320840741",
+    "firebase_url": "https://pokeapi-ef414.firebaseio.com",
+    "project_id": "pokeapi-ef414",
+    "storage_bucket": "pokeapi-ef414.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:482320840741:android:19edb23ff4278e5e7ea7cc",
+        "android_client_info": {
+          "package_name": "com.example.pokeapi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "482320840741-timvknihldq16ar2cnraijjcu4bq2vmh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.pokeapi",
+            "certificate_hash": "371a17834179c0e1e5030be2c09f25e076e9a5f0"
+          }
+        },
+        {
+          "client_id": "482320840741-8mag6s5a1remm27h6qua6ckr2rsp23dc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuoRW06AvSGTgwH50n0oEpaZ4u-GxAXLU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "482320840741-8mag6s5a1remm27h6qua6ckr2rsp23dc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
