@@ -24,7 +24,6 @@ public class AdapterItemPokemon extends RecyclerView.ViewHolder {
         pokemon_img = itemView.findViewById(R.id.pokemon_img);
         namepoke_txt = itemView.findViewById(R.id.namepoke_txt);
         itemView.setOnClickListener(this::irPokemon);
-
     }
 
     public void irPokemon(View v){
