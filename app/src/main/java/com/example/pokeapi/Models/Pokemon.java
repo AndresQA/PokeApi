@@ -7,32 +7,24 @@ public class Pokemon {
     private String nombrePoke;
     private String pokeImage;
     private String tipo;
-    private String vida;
-    private String defensa;
-    private String ataque;
-    private String velocidad;
+    private int vida;
+    private int defensa;
+    private int ataque;
+    private int velocidad;
 
     public Pokemon() {
 
     }
 
-    public Pokemon(String id, String nombrePoke, String tipo, String vida, String defensa, String ataque, String velocidad, String pokeImage) {
+    public Pokemon(String id, String nombrePoke, String pokeImage, String tipo, int vida, int defensa, int ataque, int velocidad) {
         this.id = id;
         this.nombrePoke = nombrePoke;
+        this.pokeImage = pokeImage;
         this.tipo = tipo;
         this.vida = vida;
         this.defensa = defensa;
         this.ataque = ataque;
         this.velocidad = velocidad;
-        this.pokeImage = pokeImage;
-    }
-
-    public String getPokeImage() {
-        return pokeImage;
-    }
-
-    public void setPokeImage(String pokeImage) {
-        this.pokeImage = pokeImage;
     }
 
     public String getId() {
@@ -51,6 +43,14 @@ public class Pokemon {
         this.nombrePoke = nombrePoke;
     }
 
+    public String getPokeImage() {
+        return pokeImage;
+    }
+
+    public void setPokeImage(String pokeImage) {
+        this.pokeImage = pokeImage;
+    }
+
     public String getTipo() {
         return tipo;
     }
@@ -59,35 +59,35 @@ public class Pokemon {
         this.tipo = tipo;
     }
 
-    public String getVida() {
+    public int getVida() {
         return vida;
     }
 
-    public void setVida(String vida) {
+    public void setVida(int vida) {
         this.vida = vida;
     }
 
-    public String getDefensa() {
+    public int getDefensa() {
         return defensa;
     }
 
-    public void setDefensa(String defensa) {
+    public void setDefensa(int defensa) {
         this.defensa = defensa;
     }
 
-    public String getAtaque() {
+    public int getAtaque() {
         return ataque;
     }
 
-    public void setAtaque(String ataque) {
+    public void setAtaque(int ataque) {
         this.ataque = ataque;
     }
 
-    public String getVelocidad() {
+    public int getVelocidad() {
         return velocidad;
     }
 
-    public void setVelocidad(String velocidad) {
+    public void setVelocidad(int velocidad) {
         this.velocidad = velocidad;
     }
 }

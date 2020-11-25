@@ -15,6 +15,7 @@ import com.example.pokeapi.Models.ItemPokemon;
 import com.example.pokeapi.Models.Trainer;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +55,28 @@ public class MainActivity extends AppCompatActivity {
                         DocumentSnapshot document = task.getResult();
                         if(document.exists()){
                             Trainer trainer = document.toObject(Trainer.class);
-                            this.goPokedex(trainer);
+
+
+                            firebaseFirestore.collection("trainers").document(nameEntrenador).collection("pokemones")
+                                    .get().addOnCompleteListener(task1 -> {
+
+                                if(task1.isSuccessful()){
+                                    QuerySnapshot queryDocumentSnapshots = task1.getResult();
+                                    List<ItemPokemon> pokemonesdb = queryDocumentSnapshots.toObjects(ItemPokemon.class);
+
+                                    Toast.makeText(this, "Npoke " + pokemonesdb.size(), Toast.LENGTH_SHORT).show();
+
+                                    ArrayList<ItemPokemon> itemPokemons = new ArrayList<>();
+                                    for (ItemPokemon i : pokemonesdb){
+                                        itemPokemons.add(i);
+                                    }
+
+                                    trainer.setMispokemones(itemPokemons);
+
+                                    this.goPokedex(trainer);
+                                }
+
+                            });
                         }else{
                             ArrayList<ItemPokemon> pokemones = new ArrayList<>();
                             String id = UUID.randomUUID().toString();
@@ -64,6 +86,10 @@ public class MainActivity extends AppCompatActivity {
                                     .document(nameEntrenador).set(trainer).addOnCompleteListener((proceso)->{
                                 if(proceso.isSuccessful()){
                                     this.goPokedex(trainer);
+
+
+
+
                                 }
                             });
                         }

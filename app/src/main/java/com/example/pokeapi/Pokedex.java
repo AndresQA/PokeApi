@@ -19,6 +19,7 @@ import com.example.pokeapi.comunication.DataReadOb;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class Pokedex extends AppCompatActivity {
     private RecyclerView listapokemon;
@@ -40,7 +41,7 @@ public class Pokedex extends AppCompatActivity {
             Trainer trainer = (Trainer) this.getIntent().getSerializableExtra("trainer");
             this.trainer = trainer;
             this.pokemones = trainer.getMispokemones();
-            Toast.makeText(this, "Bienvenido " + trainer.getName(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Bienvenido " + trainer.getName() + " " + trainer.getMispokemones().size(), Toast.LENGTH_SHORT).show();
         }
 
         serverpokemon = new Actions();
@@ -62,15 +63,26 @@ public class Pokedex extends AppCompatActivity {
 
     public void atraparPokemon(View v){
         String namepokemon = namepokemon_txt.getText().toString().toLowerCase();
-        serverpokemon.buscarPokemon(namepokemon, new DataReadOb() {
-            @Override
-            public void read(Pokemon pokemon) {
+        serverpokemon.buscarPokemon(namepokemon, pokemon -> {
+            namepokemon_txt.setText("");
+            if (pokemon != null){
                 FirebaseFirestore fs = FirebaseFirestore.getInstance();
                 String nameEntrenador = trainer.getName();
                 ItemPokemon itemPokemon = new ItemPokemon(pokemon.getId(), pokemon.getNombrePoke(), pokemon.getPokeImage());
                 trainer.getMispokemones().add(itemPokemon);
-                fs.collection("trainers").document(nameEntrenador).set(trainer);
+                //fs.collection("trainers").document(nameEntrenador).set(trainer);
+
+                String uid = UUID.randomUUID().toString();
+                itemPokemon.setId(uid);
+
+                pokemones = this.trainer.getMispokemones();
+                adapterPokemon = new AdapterPokemon(pokemones);
+                listapokemon.setAdapter(adapterPokemon);
+
+                fs.collection("trainers").document(this.trainer.getName())
+                        .collection("pokemones").document(uid).set(itemPokemon);
             }
+
         });
     }
 

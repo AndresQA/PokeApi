@@ -38,7 +38,7 @@ public class ItemDes {
         return types;
     }
 
-    public int getHabilidadesName(String name){
+    public int pokeHabs(String name){
         int value =0;
         for (int i = 0; i < this.habilidades.size(); i++){
             HabPokemon habilidad = this.habilidades.get(i);
