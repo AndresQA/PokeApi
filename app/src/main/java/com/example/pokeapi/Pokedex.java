@@ -14,8 +14,8 @@ import com.example.pokeapi.Adapter.AdapterPokemon;
 import com.example.pokeapi.Models.ItemPokemon;
 import com.example.pokeapi.Models.Pokemon;
 import com.example.pokeapi.Models.Trainer;
-import com.example.pokeapi.comm.Actions;
-import com.example.pokeapi.comm.DataReadOb;
+import com.example.pokeapi.comunication.Actions;
+import com.example.pokeapi.comunication.DataReadOb;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;

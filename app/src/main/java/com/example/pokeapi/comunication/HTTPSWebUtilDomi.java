@@ -1,4 +1,4 @@
-package com.example.pokeapi.comm;
+package com.example.pokeapi.comunication;
 
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;

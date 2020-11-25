@@ -1,21 +1,24 @@
-package com.example.pokeapi.comm;
+package com.example.pokeapi.comunication;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
 public class ItemDes {
 
-    @SerializedName("sprites")
-    private ItemPokeApiPokemonImage sprites;
-    @SerializedName("stats")
-    private List<ItemPokeApiPokemonHabilidad> habilidades;
+
     @SerializedName("types")
-    private List<ItemPokeApiPokemonType> types;
+    private List<TypePokemon> types;
+    @SerializedName("stats")
+    private List<HabPokemon> habilidades;
+    @SerializedName("sprites")
+    private PokemonSprite sprites;
+
+
 
     public ItemDes() { }
 
 
-    public ItemDes(ItemPokeApiPokemonImage sprites, List<ItemPokeApiPokemonHabilidad> habilidades, List<ItemPokeApiPokemonType> types) {
+    public ItemDes(PokemonSprite sprites, List<HabPokemon> habilidades, List<TypePokemon> types) {
         this.sprites = sprites;
         this.habilidades = habilidades;
         this.types = types;
@@ -24,7 +27,7 @@ public class ItemDes {
     public String getAllTypes(){
         String types = "";
         for (int i = 0; i < this.types.size(); i++){
-            ItemPokeApiPokemonType type = this.types.get(i);
+            TypePokemon type = this.types.get(i);
             if(i ==0){
                 types = type.getType().getName();
             }else{
@@ -38,7 +41,7 @@ public class ItemDes {
     public int getHabilidadesName(String name){
         int value =0;
         for (int i = 0; i < this.habilidades.size(); i++){
-            ItemPokeApiPokemonHabilidad habilidad = this.habilidades.get(i);
+            HabPokemon habilidad = this.habilidades.get(i);
             if(habilidad.getStat().getName().equals(name)){
                 value = habilidad.getValue();
                 i = this.habilidades.size();
@@ -47,40 +50,40 @@ public class ItemDes {
         return value;
     }
 
-    public ItemPokeApiPokemonImage getSprites() {
+    public PokemonSprite getSprites() {
         return sprites;
     }
 
-    public void setSprites(ItemPokeApiPokemonImage sprites) {
+    public void setSprites(PokemonSprite sprites) {
         this.sprites = sprites;
     }
 
-    public List<ItemPokeApiPokemonHabilidad> getHabilidades() {
+    public List<HabPokemon> getHabilidades() {
         return habilidades;
     }
 
-    public void setHabilidades(List<ItemPokeApiPokemonHabilidad> habilidades) {
+    public void setHabilidades(List<HabPokemon> habilidades) {
         this.habilidades = habilidades;
     }
 
-    public List<ItemPokeApiPokemonType> getTypes() {
+    public List<TypePokemon> getTypes() {
         return types;
     }
 
-    public void setTypes(List<ItemPokeApiPokemonType> types) {
+    public void setTypes(List<TypePokemon> types) {
         this.types = types;
     }
 
-    public class ItemPokeApiPokemonType{
+    public class TypePokemon{
 
         @SerializedName("type")
-        private ItemPokeApiPokemonTypeTipo type;
+        private TypePokemonTipo type;
 
-        public ItemPokeApiPokemonTypeTipo getType() {
+        public TypePokemonTipo getType() {
             return type;
         }
 
-        public class ItemPokeApiPokemonTypeTipo{
+        public class TypePokemonTipo{
             @SerializedName("name")
             private String name;
 
@@ -90,22 +93,22 @@ public class ItemDes {
         }
     }
 
-    public class ItemPokeApiPokemonHabilidad{
+    public class HabPokemon{
         @SerializedName("base_stat")
         private int value;
 
         @SerializedName("stat")
-        private ItemPokeApiPokemonHabilidadStat stat;
+        private HabPokemonStat stat;
 
         public int getValue() {
             return value;
         }
 
-        public ItemPokeApiPokemonHabilidadStat getStat() {
+        public HabPokemonStat getStat() {
             return stat;
         }
 
-        public class ItemPokeApiPokemonHabilidadStat{
+        public class HabPokemonStat{
             @SerializedName("name")
             private String name;
 
@@ -115,7 +118,7 @@ public class ItemDes {
         }
     }
 
-    public class ItemPokeApiPokemonImage{
+    public class PokemonSprite{
         @SerializedName("front_default")
         private String image;
 

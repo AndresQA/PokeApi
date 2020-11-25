@@ -1,4 +1,4 @@
-package com.example.pokeapi.comm;
+package com.example.pokeapi.comunication;
 
 import com.example.pokeapi.Models.Pokemon;
 

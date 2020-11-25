@@ -1,15 +1,8 @@
-package com.example.pokeapi.comm;
-
-import android.annotation.SuppressLint;
+package com.example.pokeapi.comunication;
 
 
 import com.example.pokeapi.Models.Pokemon;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.UUID;
 
 
 public class Actions {
