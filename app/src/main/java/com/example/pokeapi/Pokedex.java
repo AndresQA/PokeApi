@@ -1,5 +1,6 @@
 package com.example.pokeapi;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,9 +17,14 @@ import com.example.pokeapi.Models.Pokemon;
 import com.example.pokeapi.Models.Trainer;
 import com.example.pokeapi.comunication.Actions;
 import com.example.pokeapi.comunication.DataReadOb;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class Pokedex extends AppCompatActivity {
@@ -30,7 +36,7 @@ public class Pokedex extends AppCompatActivity {
     private ArrayList<ItemPokemon> pokemones;
     private AdapterPokemon adapterPokemon;
     private Actions serverpokemon;
-    private Trainer trainer;
+    public Trainer trainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,36 +63,67 @@ public class Pokedex extends AppCompatActivity {
         atrapar_btn.setOnClickListener(this::atraparPokemon);
         buscar_btn.setOnClickListener(this::buscarPokimon);
 
-        adapterPokemon = new AdapterPokemon(pokemones);
+        adapterPokemon = new AdapterPokemon(pokemones, this);
         listapokemon.setAdapter(adapterPokemon);
     }
 
     public void atraparPokemon(View v){
         String namepokemon = namepokemon_txt.getText().toString().toLowerCase();
-        serverpokemon.buscarPokemon(namepokemon, pokemon -> {
-            namepokemon_txt.setText("");
-            if (pokemon != null){
-                FirebaseFirestore fs = FirebaseFirestore.getInstance();
-                String nameEntrenador = trainer.getName();
-                ItemPokemon itemPokemon = new ItemPokemon(pokemon.getId(), pokemon.getNombrePoke(), pokemon.getPokeImage());
-                trainer.getMispokemones().add(itemPokemon);
-                //fs.collection("trainers").document(nameEntrenador).set(trainer);
+        if (namepokemon.equals("") == false) {
+            serverpokemon.buscarPokemon(namepokemon, pokemon -> {
+                namepokemon_txt.setText("");
+                if (pokemon != null){
+                    FirebaseFirestore fs = FirebaseFirestore.getInstance();
+                    String nameEntrenador = trainer.getName();
+                    ItemPokemon itemPokemon = new ItemPokemon(pokemon.getId(), pokemon.getNombrePoke(), pokemon.getPokeImage());
+                    trainer.getMispokemones().add(itemPokemon);
+                    //fs.collection("trainers").document(nameEntrenador).set(trainer);
 
-                String uid = UUID.randomUUID().toString();
-                itemPokemon.setId(uid);
+                    String uid = UUID.randomUUID().toString();
+                    itemPokemon.setId(uid);
 
-                pokemones = this.trainer.getMispokemones();
-                adapterPokemon = new AdapterPokemon(pokemones);
-                listapokemon.setAdapter(adapterPokemon);
+                    pokemones = this.trainer.getMispokemones();
+                    adapterPokemon = new AdapterPokemon(pokemones, this);
+                    listapokemon.setAdapter(adapterPokemon);
 
-                fs.collection("trainers").document(this.trainer.getName())
-                        .collection("pokemones").document(uid).set(itemPokemon);
-            }
+                    fs.collection("trainers").document(this.trainer.getName())
+                            .collection("pokemones").document(uid).set(itemPokemon);
+                }
 
-        });
+            });
+
+        }
     }
 
     public void buscarPokimon(View v){
+        String namePokemon = this.buscarpokimon_txt.getText().toString();
+        //  Toast.makeText(this, "Buscando a " + namePokemon, Toast.LENGTH_SHORT).show();
+        if(!namePokemon.equals("")){
+            Pokedex pokedex = this;
+            FirebaseFirestore.getInstance().collection("trainers").document(this.trainer.getName())
+                    .collection("pokemones").whereEqualTo("nombrePoke", namePokemon).addSnapshotListener(new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                    ArrayList<ItemPokemon> itemPokemons = new ArrayList<>();
 
+                    for (DocumentSnapshot doc : value) {
+                        ItemPokemon poke = doc.toObject(ItemPokemon.class);
+                        itemPokemons.add(poke);
+
+                    }
+
+                    adapterPokemon = new AdapterPokemon(itemPokemons, pokedex);
+                    listapokemon.setAdapter(adapterPokemon);
+
+
+                }
+            });
+        }else{
+            Toast.makeText(this, "Todos los Pokemones", Toast.LENGTH_SHORT).show();
+            adapterPokemon = new AdapterPokemon(this.trainer.getMispokemones(), this);
+            listapokemon.setAdapter(adapterPokemon);
+        }
     }
+
+
 }

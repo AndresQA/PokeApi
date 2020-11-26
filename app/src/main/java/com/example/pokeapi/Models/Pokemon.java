@@ -1,6 +1,8 @@
 package com.example.pokeapi.Models;
 
-public class Pokemon {
+import java.io.Serializable;
+
+public class Pokemon implements Serializable {
 
 
     private String id;
